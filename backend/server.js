@@ -8,11 +8,24 @@ const { Pool } = require("pg");
 
 const PORT = Number(process.env.PORT || 8080);
 const API_KEY = process.env.API_KEY || "";
-const DATABASE_URL = process.env.DATABASE_URL || "";
+const DATABASE_URL = normalizeDatabaseUrl(process.env.DATABASE_URL || "");
 
 if (!DATABASE_URL) {
   console.error("DATABASE_URL is required. Set it in Railway variables or copy .env.example to .env");
   process.exit(1);
+}
+
+/** Aiven/other hosts: avoid pg v9 sslmode warning; keep libpq-compatible require SSL. */
+function normalizeDatabaseUrl(url) {
+  if (!url) {
+    return url;
+  }
+
+  if (url.includes("uselibpqcompat=")) {
+    return url;
+  }
+
+  return url + (url.indexOf("?") >= 0 ? "&" : "?") + "uselibpqcompat=true";
 }
 
 const pool = new Pool({
