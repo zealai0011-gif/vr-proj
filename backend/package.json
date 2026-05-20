@@ -2,14 +2,14 @@
   "name": "conversational-ai-auth-api",
   "version": "1.0.0",
   "private": true,
-  "description": "HTTPS API in front of Aiven PostgreSQL for Unity Quest auth",
+  "description": "HTTPS API for Unity Quest auth (Neon/Aiven PostgreSQL)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
     "cors": "^2.8.5",
